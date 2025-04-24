@@ -30,8 +30,9 @@ public class Main {
         Menu burgers = new Menu("Burgers", burgerMenu);
         Menu drinks = new Menu("Drinks", drinkMenu);
         Menu desserts = new Menu("Desserts", dessertMenu);
+        List<Menu> menuCategory = new ArrayList<>(List.of(burgers, drinks, desserts));
 
-        Kiosk kiosk = new Kiosk(burgers, drinks, desserts);
+        Kiosk kiosk = new Kiosk(menuCategory);
         kiosk.start();
     }
 }
