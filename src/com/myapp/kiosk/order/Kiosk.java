@@ -1,5 +1,6 @@
 package com.myapp.kiosk.order;
 
+import com.myapp.kiosk.menu.Menu;
 import com.myapp.kiosk.menu.MenuItem;
 
 import java.util.ArrayList;
@@ -8,21 +9,48 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    List<MenuItem> menuItems = new ArrayList<>();
+    private Menu burgers;
+    private Menu drinks;
+    private Menu desserts;
     Scanner sc = new Scanner(System.in);
 
-    public Kiosk(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
+    public Kiosk(Menu burgers, Menu drinks, Menu desserts) {
+        this.burgers = burgers;
+        this.drinks = drinks;
+        this.desserts = desserts;
     }
 
-    public void start() throws InputMismatchException, IndexOutOfBoundsException {
+    public void start() {
+        List<Menu> menuCategory = new ArrayList<>();
+        menuCategory.add(burgers);
+        menuCategory.add(drinks);
+        menuCategory.add(desserts);
+
         while (true) {
-            System.out.println("[ SHAKESHACK MENU ]");
-            for (int i = 0; i < menuItems.size(); i++) {
-                MenuItem menuItem = menuItems.get(i);
-                System.out.printf("%d %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+            System.out.println("[ MAIN MENU ]");
+            for (int i = 0; i < menuCategory.size(); i++) {
+                System.out.printf("%d. %s\n", i + 1, menuCategory.get(i).getCategory());
             }
             System.out.println("0. 종료");
+
+            int mainMenuSelect = 0;
+            try {
+                mainMenuSelect = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("숫자를 입력해주세요.");
+                sc.nextLine();
+                continue;
+            }
+            if (mainMenuSelect == 0) {
+                System.out.println("프로그램을 종료합니다.");
+                return;
+            }
+
+//            for (int i = 0; i < menuItems.size(); i++) {
+//                MenuItem menuItem = menuItems.get(i);
+//                System.out.printf("%d %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+//            }
+//            System.out.println("0. 뒤로가기");
 
             int menuSelect = 0;
             try {
