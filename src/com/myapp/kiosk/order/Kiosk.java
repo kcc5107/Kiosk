@@ -46,12 +46,20 @@ public class Kiosk {
                 return;
             }
 
-//            for (int i = 0; i < menuItems.size(); i++) {
-//                MenuItem menuItem = menuItems.get(i);
-//                System.out.printf("%d %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
-//            }
-//            System.out.println("0. 뒤로가기");
+            Menu menu = null;
+            try {
+                menu = menuCategory.get(mainMenuSelect-1);
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("없는 카테고리 번호입니다.");
+                continue;
+            }
+            for (int i = 0; i < menu.getItems().size(); i++) {
+                MenuItem menuItem = menu.getItems().get(i);
+                System.out.printf("%d %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+            }
+            System.out.println("0. 뒤로가기");
 
+            // 메뉴 카테고리 선택 후
             int menuSelect = 0;
             try {
                 menuSelect = sc.nextInt();
@@ -61,15 +69,14 @@ public class Kiosk {
                 continue;
             }
             if (menuSelect == 0) {
-                System.out.println("프로그램을 종료합니다.");
-                return;
+                continue;
             }
 
             MenuItem menuItem = null;
             try {
-                menuItem = menuItems.get(menuSelect - 1);
+                menuItem = menu.getItems().get(menuSelect-1);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("지정된 범위의 숫자를 입력해주세요");
+                System.out.println("없는 메뉴의 번호입니다.");
                 continue;
             }
             System.out.printf("선택한 메뉴 : %s | W %3.1f | %s%n ", menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());

@@ -24,7 +24,7 @@ public class Menu {
     public void printMenu() {
         for (int i = 0; i < items.size(); i++) {
             MenuItem menuItem = items.get(i);
-            System.out.printf("%d %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+            System.out.printf("%d. %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
         }
     }
 }
