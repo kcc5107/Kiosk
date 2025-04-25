@@ -3,8 +3,10 @@ package com.myapp.kiosk;
 import com.myapp.kiosk.menu.Menu;
 import com.myapp.kiosk.menu.MenuItem;
 import com.myapp.kiosk.order.Kiosk;
+import com.myapp.kiosk.order.ShoppingCart;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 public class Main {
@@ -32,7 +34,15 @@ public class Main {
         Menu desserts = new Menu("Desserts", dessertMenu);
         List<Menu> menuCategory = new ArrayList<>(List.of(burgers, drinks, desserts));
 
-        Kiosk kiosk = new Kiosk(menuCategory);
-        kiosk.start();
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Kiosk kiosk = new Kiosk(menuCategory, shoppingCart);
+        while(true) {
+            try {
+                kiosk.start();
+            } catch (InputMismatchException e) {
+                System.out.println("숫자 잘못 입력");
+            }
+        }
+
     }
 }
