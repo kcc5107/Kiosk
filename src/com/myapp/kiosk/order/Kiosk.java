@@ -34,22 +34,29 @@ public class Kiosk {
                         System.out.println("유효하지 않은 번호입니다.");
                         continue;
                     }
-                    List<MenuItem> items = shoppingCart.getShoppingCart();
+                    HashMap<MenuItem, Integer> items = shoppingCart.getShoppingCart();
                     double total = 0;
-                    for (MenuItem item : items) {
-                        total += item.getPrice();
+                    for (MenuItem item : items.keySet()) {
+                        total += item.getPrice()*items.get(item);
                     }
 
                     System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
                     shoppingCart.printItem();
                     System.out.printf("[ Total ]%nW %3.1f%n", total);
                     System.out.println("\n1. 주문      2. 메뉴판");
-                    int order = scannerInt();
-                    if (order == 1) {
-                        System.out.printf("\n주문이 완료되었습니다. 금액은 W %3.1f 입니다%n", total);
-                        shoppingCart.clearCart();
+                    boolean orderFlag = true;
+                    while (orderFlag) {
+                        int order = scannerInt();
+                        if (order == 1) {
+                            System.out.printf("\n주문이 완료되었습니다. 금액은 W %3.1f 입니다%n", total);
+                            shoppingCart.clearCart();
+                            orderFlag = false;
+                        } else if (order == 2) {
+                            orderFlag = false;
+                        } else {
+                            System.out.println("유효하지 않은 번호입니다.");
+                        }
                     }
-                    // 추가 할 부분
                     break;
                 case 5:
                     // 장바구니가 비어있을 때 잘못 입력
@@ -87,7 +94,7 @@ public class Kiosk {
                         System.out.println("유효하지 않은 번호입니다.");
                         continue;
                     }
-                    System.out.printf("선택한 메뉴 : %s | W %3.1f | %s%n ", menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+                    System.out.printf("선택한 메뉴 : %s | W %3.1f | %s%n", menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
                     System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                     System.out.println("1. 확인      2. 취소");
                     boolean flag = true;
@@ -95,7 +102,7 @@ public class Kiosk {
                         int add = scannerInt();
                         if (add == 1) {
                             shoppingCart.addToCart(menuItem);
-                            System.out.println(menuItem.getName() + " 이 장바구니에 추가되었습니다.");
+                            System.out.println(menuItem.getName() + "가 장바구니에 추가되었습니다.");
                             flag = false;
                         } else if (add == 2) {
                             flag = false;
@@ -134,8 +141,9 @@ public class Kiosk {
             num = sc.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("숫자를 입력해주세요.");
+            sc.nextLine();
         }
-        // -1을 리턴하게되면 그 뒤, 결국 index 예외 처리를 함
+        // -1을 리턴하게되면 그 뒤, switch문 default:에서 결국 index 예외 처리를 함
         return num;
     }
 }

@@ -3,23 +3,29 @@ package com.myapp.kiosk.order;
 import com.myapp.kiosk.menu.MenuItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShoppingCart {
-    private List<MenuItem> shoppingCart = new ArrayList<>();
+    HashMap<MenuItem, Integer> shoppingCart = new HashMap<>();
 
     void addToCart(MenuItem item) {
-        shoppingCart.add(item);
+        if (shoppingCart.containsKey(item)) {
+            int count = shoppingCart.get(item) + 1;
+            shoppingCart.put(item, count);
+        } else {
+            shoppingCart.put(item, 1);
+        }
     }
 
-    List<MenuItem> getShoppingCart() {
+    HashMap<MenuItem, Integer> getShoppingCart() {
         return shoppingCart;
     }
 
     void printItem() {
-        for (int i = 0; i < shoppingCart.size(); i++) {
-            MenuItem menuItem = shoppingCart.get(i);
-            System.out.printf("%-13s | W %3.1f | %s\n", menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+        for (MenuItem menuItem : shoppingCart.keySet()) {
+            System.out.printf("%-13s | W %3.1f | %s | 수량 : %d\n",
+                    menuItem.getName(), menuItem.getPrice(), menuItem.getDescription(), shoppingCart.get(menuItem));
         }
     }
 
