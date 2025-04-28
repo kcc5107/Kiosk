@@ -26,4 +26,5 @@ public class ShoppingCart {
     void clearCart() {
         shoppingCart.clear();
     }
+
 }

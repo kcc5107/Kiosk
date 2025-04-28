@@ -36,13 +36,6 @@ public class Main {
 
         ShoppingCart shoppingCart = new ShoppingCart();
         Kiosk kiosk = new Kiosk(menuCategory, shoppingCart);
-        while(true) {
-            try {
-                kiosk.start();
-            } catch (InputMismatchException e) {
-                System.out.println("숫자 잘못 입력");
-            }
-        }
-
+        kiosk.start();
     }
 }
