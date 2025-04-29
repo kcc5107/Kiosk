@@ -37,7 +37,7 @@ public class Kiosk {
                     HashMap<MenuItem, Integer> items = shoppingCart.getShoppingCart();
                     double total = 0;
                     for (MenuItem item : items.keySet()) {
-                        total += item.getPrice()*items.get(item);
+                        total += item.getPrice() * items.get(item);
                     }
 
                     System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
@@ -48,7 +48,9 @@ public class Kiosk {
                     while (orderFlag) {
                         int order = scannerInt();
                         if (order == 1) {
-                            System.out.printf("\n주문이 완료되었습니다. 금액은 W %3.1f 입니다%n", total);
+                            // 사용자 유형별 할인
+                            double discountTotal = userTypeSelect(total);
+                            System.out.printf("\n주문이 완료되었습니다. 금액은 W %3.1f 입니다%n", discountTotal);
                             shoppingCart.clearCart();
                             orderFlag = false;
                         } else if (order == 2) {
@@ -97,15 +99,15 @@ public class Kiosk {
                     System.out.printf("선택한 메뉴 : %s | W %3.1f | %s%n", menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
                     System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
                     System.out.println("1. 확인      2. 취소");
-                    boolean flag = true;
-                    while (flag) {
+                    boolean addFlag = true;
+                    while (addFlag) {
                         int add = scannerInt();
                         if (add == 1) {
                             shoppingCart.addToCart(menuItem);
                             System.out.println(menuItem.getName() + "가 장바구니에 추가되었습니다.");
-                            flag = false;
+                            addFlag = false;
                         } else if (add == 2) {
-                            flag = false;
+                            addFlag = false;
                         } else {
                             System.out.println("유효하지 않은 번호입니다.");
                         }
@@ -136,6 +138,7 @@ public class Kiosk {
     }
 
     private int scannerInt() {
+        // 매개변수로 숫자 범위 제한?
         int num = -1;
         try {
             num = sc.nextInt();
@@ -145,5 +148,14 @@ public class Kiosk {
         }
         // -1을 리턴하게되면 그 뒤, switch문 default:에서 결국 index 예외 처리를 함
         return num;
+    }
+
+    private double userTypeSelect(double total) {
+        System.out.println("할인 정보를 입력해주세요.");
+        UserTypeDiscount.printUserTypeDiscount();
+        int userTypeNum = scannerInt();
+        // 예외처리 추후 수정
+        UserTypeDiscount userTypeDiscount = UserTypeDiscount.selectUserType(userTypeNum);
+        return userTypeDiscount.applyDiscount(total);
     }
 }

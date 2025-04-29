@@ -2,9 +2,7 @@ package com.myapp.kiosk.order;
 
 import com.myapp.kiosk.menu.MenuItem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ShoppingCart {
     HashMap<MenuItem, Integer> shoppingCart = new HashMap<>();
