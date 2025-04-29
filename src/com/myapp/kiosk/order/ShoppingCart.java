@@ -3,6 +3,8 @@ package com.myapp.kiosk.order;
 import com.myapp.kiosk.menu.MenuItem;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShoppingCart {
     HashMap<MenuItem, Integer> shoppingCart = new HashMap<>();
@@ -31,4 +33,13 @@ public class ShoppingCart {
         shoppingCart.clear();
     }
 
+    void removeItem(String search) {
+        List<MenuItem> collect = shoppingCart.keySet().stream().filter(item -> item.getName().toLowerCase().contains(search)).collect(Collectors.toList());
+        if (!collect.isEmpty()) {
+            for (MenuItem item : collect) {
+                System.out.println(item.getName() + "가 삭제되었습니다.");
+                shoppingCart.remove(item);
+            }
+        }
+    }
 }

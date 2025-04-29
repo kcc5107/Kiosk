@@ -43,9 +43,9 @@ public class Kiosk {
                     System.out.println("아래와 같이 주문 하시겠습니까?\n[ Orders ]");
                     shoppingCart.printItem();
                     System.out.printf("[ Total ]%nW %3.1f%n", total);
-                    System.out.println("\n1. 주문      2. 메뉴판");
                     boolean orderFlag = true;
                     while (orderFlag) {
+                        System.out.println("\n1. 주문      2. 메뉴판      3. 품목 삭제");
                         int order = scannerInt();
                         if (order == 1) {
                             // 사용자 유형별 할인
@@ -55,6 +55,22 @@ public class Kiosk {
                             orderFlag = false;
                         } else if (order == 2) {
                             orderFlag = false;
+                        } else if (order == 3) {
+                            System.out.println("입력받은 문자를 포함한 이름의 주문 품목을 삭제합니다. (3글자 이상)");
+                            String search = null;
+                            try {
+                                search = sc.next();
+                                if (search.length() < 3) {
+                                    System.out.println("3글자 이상 입력해주세요");
+                                    continue;
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("문자열을 입력해주세요");
+                                continue;
+                            }
+                            // 품목 삭제
+                            shoppingCart.removeItem(search);
+                            break;
                         } else {
                             System.out.println("유효하지 않은 번호입니다.");
                         }

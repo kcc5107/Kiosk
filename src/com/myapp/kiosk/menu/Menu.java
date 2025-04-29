@@ -22,9 +22,11 @@ public class Menu {
     }
 
     public void printMenu() {
-        for (int i = 0; i < items.size(); i++) {
-            MenuItem menuItem = items.get(i);
-            System.out.printf("%d. %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
-        }
+//        for (int i = 0; i < items.size(); i++) {
+//            MenuItem menuItem = items.get(i);
+//            System.out.printf("%d. %-13s | W %3.1f | %s\n", i + 1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription());
+//        }
+        // items.indexOf는 리스트부터 선형 탐색으로 비효율적?
+        items.stream().forEach((menuItem) -> System.out.printf("%d. %-13s | W %3.1f | %s\n", items.indexOf(menuItem)+1, menuItem.getName(), menuItem.getPrice(), menuItem.getDescription()));
     }
 }
