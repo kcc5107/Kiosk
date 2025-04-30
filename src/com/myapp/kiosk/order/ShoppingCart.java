@@ -40,6 +40,16 @@ public class ShoppingCart {
                 System.out.println(item.getName() + "가 삭제되었습니다.");
                 shoppingCart.remove(item);
             }
+        } else {
+            System.out.println("해당하는 품목이 없습니다.");
         }
+    }
+
+    double totalPrice() {
+        double total = 0;
+        for (MenuItem item : shoppingCart.keySet()) {
+            total += item.getPrice() * shoppingCart.get(item);
+        }
+        return total;
     }
 }

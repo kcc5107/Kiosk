@@ -6,7 +6,6 @@ import com.myapp.kiosk.order.Kiosk;
 import com.myapp.kiosk.order.ShoppingCart;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class Main {
@@ -35,6 +34,7 @@ public class Main {
         List<Menu> menuCategory = new ArrayList<>(List.of(burgers, drinks, desserts));
 
         ShoppingCart shoppingCart = new ShoppingCart();
+
         Kiosk kiosk = new Kiosk(menuCategory, shoppingCart);
         kiosk.start();
     }
