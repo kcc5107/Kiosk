@@ -3,6 +3,7 @@ package com.myapp.kiosk.order;
 import com.myapp.kiosk.menu.MenuItem;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,12 @@ public class ShoppingCart {
 
     void clearCart() {
         shoppingCart.clear();
+    }
+
+    void checkCartEmpty() {
+        if (shoppingCart.isEmpty()) {
+            throw new InputMismatchException();
+        }
     }
 
     void removeItem(String search) {

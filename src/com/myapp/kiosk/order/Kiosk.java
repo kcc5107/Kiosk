@@ -3,11 +3,14 @@ package com.myapp.kiosk.order;
 import com.myapp.kiosk.menu.Menu;
 import com.myapp.kiosk.menu.MenuItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 public class Kiosk {
     private List<Menu> menuCategory = new ArrayList<>();
-    private ShoppingCart shoppingCart;
+    private final ShoppingCart shoppingCart;
     Scanner sc = new Scanner(System.in);
 
     public Kiosk(List<Menu> menuCategory, ShoppingCart shoppingCart) {
@@ -29,7 +32,7 @@ public class Kiosk {
                 case 4:
                     // 장바구니가 비어있을 때 잘못 입력한 경우의 예외처리
                     try {
-                        checkCartEmpty();
+                        shoppingCart.checkCartEmpty();
                     } catch (InputMismatchException e) {
                         System.out.println("유효하지 않은 번호입니다.");
                         continue;
@@ -47,7 +50,7 @@ public class Kiosk {
                 case 5:
                     // 장바구니가 비어있을 때 잘못 입력
                     try {
-                        checkCartEmpty();
+                        shoppingCart.checkCartEmpty();
                     } catch (InputMismatchException e) {
                         System.out.println("유효하지 않은 번호입니다.");
                         continue;
@@ -71,12 +74,6 @@ public class Kiosk {
                     confirmAdd(menuItem);
                     break;
             }
-        }
-    }
-
-    private void checkCartEmpty() {
-        if (shoppingCart.getShoppingCart().isEmpty()) {
-            throw new InputMismatchException();
         }
     }
 
@@ -117,6 +114,7 @@ public class Kiosk {
         return num;
     }
 
+    // Enum 활용한 메서드
     private double userTypeSelect(double total) {
         System.out.println("할인 정보를 입력해주세요.");
         // 사용자 유형별 할인율 출력
